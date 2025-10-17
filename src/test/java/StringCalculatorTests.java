@@ -1,4 +1,6 @@
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -25,5 +27,29 @@ public class StringCalculatorTests {
         int expected = 12;
         int actual = stringCalculator.add(",\n12,\n,\n,\n,");
         assertEquals(expected,actual);
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "'9,6',15",
+            "'3,4',7",
+            "'7,8,0,1,1',17",
+            "'0,1,2,5,6',14"
+    })
+    void add_returns_result_whenMultipleNumbersInArgument(String input, String expected) {
+        int actual = stringCalculator.add(input);
+        assertEquals(actual, Integer.parseInt(expected));
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "'6,6',12",
+            "'3,4\n,\n,5',12",
+            "'7,8,0,1,2,\n,,,\n,1',19",
+            "'0,\n,\n,0,1,,2,,,,5,,,,7,10',25"
+    })
+    void add_returns_result_whenMultipleNumbersAndNewLinesInArgument(String input, String expected) {
+        int actual = stringCalculator.add(input);
+        assertEquals(actual, Integer.parseInt(expected));
     }
 }
