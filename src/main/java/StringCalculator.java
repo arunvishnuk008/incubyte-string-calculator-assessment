@@ -40,7 +40,9 @@ public class StringCalculator {
         return Arrays.stream(numbersLine.split(delimiter))
                 .map(str -> str.replace("\n", ""))
                 .filter(str -> !str.isBlank())
-                .map(Integer::parseInt).toList();
+                .map(Integer::parseInt)
+                .filter(num -> num <= 1000)
+                .toList();
     }
 
 

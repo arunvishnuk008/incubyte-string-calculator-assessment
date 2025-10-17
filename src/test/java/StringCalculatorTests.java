@@ -67,8 +67,21 @@ public class StringCalculatorTests {
     }
 
     @Test
-    void add_throws_exception_whenNegativeNumbersInArguments() {
+    void add_throws_exception_whenSingleNegativeNumbersInArguments() {
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> stringCalculator.add("-1,2,3,4,5,7"));
+        assertEquals("negative numbers not allowed [-1]", exception.getMessage());
+    }
+
+    @Test
+    void add_throws_exception_whenMultipleNegativeNumbersInArguments() {
         RuntimeException exception = assertThrows(RuntimeException.class, () -> stringCalculator.add("-1,-2,3,4,5,-7"));
         assertEquals("negative numbers not allowed [-1, -2, -7]", exception.getMessage());
+    }
+
+    @Test
+    void add_ignores_numbersBiggerThanThousand() {
+        int expected = 2;
+        int actual = stringCalculator.add("2,1001");
+        assertEquals(expected,actual);
     }
 }
