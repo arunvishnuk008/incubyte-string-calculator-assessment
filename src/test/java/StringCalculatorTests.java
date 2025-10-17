@@ -12,4 +12,11 @@ public class StringCalculatorTests {
         int actual = stringCalculator.add("");
         assertEquals(expected, actual);
     }
+
+    @Test
+    void add_returns_input_whenOnlyOneNumberArgument() {
+        int expected = 8;
+        int actual = stringCalculator.add("8");
+        assertEquals(expected,actual);
+    }
 }
