@@ -84,4 +84,16 @@ public class StringCalculatorTests {
         int actual = stringCalculator.add("2,1001");
         assertEquals(expected,actual);
     }
+
+    @ParameterizedTest
+    @CsvSource({
+            "'//**\n6**6',12",
+            "'//###\n3###4\n###\n###5',12",
+            "'//&&&\n7&&&8&&&0&&&1&&&2&&&\n&&&\n&&&1',19",
+            "'//,,\n0,,\n,,\n,,0,,1,,,,2,,,,5,,,,7,,10',25"
+    })
+    void add_returns_result_whenMultipleNumbersAndMultiCharacterDelimiterInArgument(String input, String expected) {
+        int actual = stringCalculator.add(input);
+        assertEquals(actual, Integer.parseInt(expected));
+    }
 }
