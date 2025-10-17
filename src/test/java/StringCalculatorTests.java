@@ -3,6 +3,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class StringCalculatorTests {
 
@@ -19,14 +20,14 @@ public class StringCalculatorTests {
     void add_returns_input_whenOnlyOneNumberInArgument() {
         int expected = 8;
         int actual = stringCalculator.add("8");
-        assertEquals(expected,actual);
+        assertEquals(expected, actual);
     }
 
     @Test
     void add_returns_input_whenOnlyOneNumberAndNewLinesInArgument() {
         int expected = 12;
         int actual = stringCalculator.add(",\n12,\n,\n,\n,");
-        assertEquals(expected,actual);
+        assertEquals(expected, actual);
     }
 
     @ParameterizedTest
@@ -63,5 +64,11 @@ public class StringCalculatorTests {
     void add_returns_result_whenMultipleNumbersAndDifferentDelimiterInArgument(String input, String expected) {
         int actual = stringCalculator.add(input);
         assertEquals(actual, Integer.parseInt(expected));
+    }
+
+    @Test
+    void add_throws_exception_whenNegativeNumbersInArguments() {
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> stringCalculator.add("-1,-2,3,4,5,-7"));
+        assertEquals("negative numbers not allowed [-1, -2, -7]", exception.getMessage());
     }
 }
